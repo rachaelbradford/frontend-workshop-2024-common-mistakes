@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Counter from "./Counter";
 import { Configure } from "./Configure";
 
@@ -12,13 +12,18 @@ function Tricorder() {
     slingshot?: boolean;
     stembolts?: boolean;
   }>();
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    interval.current = setInterval(() => {
       setFoundLifeForms([...foundLifeforms, Math.random()]);
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval.current != null) {
+        clearInterval(interval.current);
+      }
+    };
   });
 
   useEffect(() => {
@@ -51,11 +56,15 @@ function Tricorder() {
   }: {
     lifeforms: number[];
   }) {
-    return lifeforms.length === 47 ? (
-      <div className="text-3xl text-green-700 p-64">47 lifeforms found!</div>
-    ) : (
-      <></>
-    );
+    if (lifeforms.length === 47) {
+      if (interval.current != null) {
+        clearInterval(interval.current);
+      }
+      return (
+        <div className="text-3xl text-green-700 p-64">47 lifeforms found!</div>
+      );
+    }
+    return <></>;
   }
 
   return (
