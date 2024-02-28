@@ -7,7 +7,6 @@ import { Configure } from "./Configure";
 function Tricorder() {
   const [scanForLifeforms, setScanForLifeforms] = useState<boolean>();
   const [foundLifeforms, setFoundLifeForms] = useState<number[]>([]);
-  const [titleSet, setTitleSet] = useState(false);
   const [config, setConfig] = useState<{
     antimatter?: boolean;
     slingshot?: boolean;
@@ -15,20 +14,16 @@ function Tricorder() {
   }>();
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       setFoundLifeForms([...foundLifeforms, Math.random()]);
     }, 1000);
+
+    return () => clearInterval(interval);
   });
 
   useEffect(() => {
     document.title = "Found lifeforms: " + foundLifeforms.length;
-  });
-
-  useEffect(() => {
-    if (!titleSet) {
-      document.title = "Found lifeforms: " + foundLifeforms.length;
-    }
-  }, [titleSet, foundLifeforms.length]);
+  }, [foundLifeforms.length]);
 
   const CheckConfigurationComponent = (tricorderConfig: typeof config) => {
     if (
