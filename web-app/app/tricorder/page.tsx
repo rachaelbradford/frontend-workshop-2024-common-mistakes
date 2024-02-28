@@ -56,12 +56,27 @@ function Tricorder(props: any) {
     );
   };
 
+  function CheckNumberOfLifeformsIsCorrect({
+    lifeforms,
+  }: {
+    lifeforms: number[];
+  }) {
+    return lifeforms.length === 47 ? (
+      <div className="text-3xl text-green-700 p-64">47 lifeforms found!</div>
+    ) : (
+      <></>
+    );
+  }
+
   return (
     <div>
       <Counter
         count={
           typeof document === "undefined" ? "" : document?.title?.match(/\d+/)
         }
+      />
+      <CheckNumberOfLifeformsIsCorrect
+        lifeforms={foundLifeforms as any as unknown as number[]}
       />
       <CheckConfigurationComponent />
       <div>
@@ -84,8 +99,8 @@ function Tricorder(props: any) {
         className="m-4 p-4 rounded-full bg-red-900 font-bold text-white"
         onClick={() => {
           const newFoundLifeforms = foundLifeforms;
-          newFoundLifeforms.map((_, idx) => {
-            delete newFoundLifeforms[idx];
+          newFoundLifeforms.map((_: any, idx: string) => {
+            delete newFoundLifeforms[idx as any as number];
           });
           setFoundLifeForms(newFoundLifeforms);
         }}
@@ -104,7 +119,7 @@ function Tricorder(props: any) {
       </div>
       <div>
         <ul>
-          {foundLifeforms.map((lifeform, idx) => (
+          {foundLifeforms.map((lifeform: string, idx: string) => (
             <li key={lifeform}>
               {idx}: {lifeform}
             </li>
