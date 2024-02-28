@@ -6,7 +6,7 @@ import { Configure } from "./Configure";
 
 function Tricorder() {
   const [scanForLifeforms, setScanForLifeforms] = useState<boolean>();
-  const [foundLifeforms, setFoundLifeForms] = useState<any>([]);
+  const [foundLifeforms, setFoundLifeForms] = useState<number[]>([]);
   const [titleSet, setTitleSet] = useState(false);
   const [config, setConfig] = useState<{
     antimatter?: boolean;
@@ -16,7 +16,7 @@ function Tricorder() {
 
   useEffect(() => {
     setInterval(() => {
-      foundLifeforms.push(Math.random());
+      setFoundLifeForms([...foundLifeforms, Math.random()]);
     }, 1000);
   });
 
@@ -70,9 +70,7 @@ function Tricorder() {
           typeof document === "undefined" ? "" : document?.title?.match(/\d+/)
         }
       />
-      <CheckNumberOfLifeformsIsCorrect
-        lifeforms={foundLifeforms as any as unknown as number[]}
-      />
+      <CheckNumberOfLifeformsIsCorrect lifeforms={foundLifeforms} />
       <CheckConfigurationComponent />
       <div>
         <Configure onChange={setConfig} />
@@ -81,7 +79,7 @@ function Tricorder() {
       <button
         className="m-4 p-4 rounded-full bg-red-900 font-bold text-white"
         onClick={() => {
-          setScanForLifeforms(s => !s)
+          setScanForLifeforms((s) => !s);
         }}
       >
         Scan for a new lifeform every 1000ms?
@@ -89,11 +87,7 @@ function Tricorder() {
       <button
         className="m-4 p-4 rounded-full bg-red-900 font-bold text-white"
         onClick={() => {
-          const newFoundLifeforms = foundLifeforms;
-          newFoundLifeforms.map((_: any, idx: string) => {
-            delete newFoundLifeforms[idx as any as number];
-          });
-          setFoundLifeForms(newFoundLifeforms);
+          setFoundLifeForms([]);
         }}
       >
         Clear found lifeforms
@@ -110,7 +104,7 @@ function Tricorder() {
       </div>
       <div>
         <ul>
-          {foundLifeforms.map((lifeform: string, idx: string) => (
+          {foundLifeforms.map((lifeform, idx) => (
             <li key={lifeform}>
               {idx}: {lifeform}
             </li>
