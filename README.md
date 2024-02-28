@@ -10,4 +10,5 @@ if you've found everything, or if you have more work to do.
 ## What should the application do?
 
 This application is a tricorder searching for lifeforms! Once it's found the appropriate
-number of lifeforms (we want exactly 47 lifeforms found!), it should indicate success.
+number of lifeforms (we want exactly 47 lifeforms found!), it should indicate success,
+and it should stop trying to detect lifeforms.
