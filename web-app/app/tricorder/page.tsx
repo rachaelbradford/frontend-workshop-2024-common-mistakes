@@ -5,13 +5,8 @@ import Counter from "./Counter";
 import { Configure } from "./Configure";
 
 function Tricorder() {
-  const scanForLifeforms = useState<any>();
-
-    const isScanningForLifeForms = scanForLifeforms[0];
-    const setScanForLifeFormsToTrue = () => scanForLifeforms[1](true);
-    const setScanForLifeFormsToFalse = () => scanForLifeforms[1](false);
-
-    let [foundLifeforms, setFoundLifeForms] = useState<any>([]);
+  const [scanForLifeforms, setScanForLifeforms] = useState<boolean>();
+  const [foundLifeforms, setFoundLifeForms] = useState<any>([]);
 
   useEffect(() => {
     setInterval(() => {
@@ -88,11 +83,7 @@ function Tricorder() {
       <button
         className="m-4 p-4 rounded-full bg-red-900 font-bold text-white"
         onClick={() => {
-          if (isScanningForLifeForms) {
-            setScanForLifeFormsToFalse();
-          } else {
-            setScanForLifeFormsToTrue();
-          }
+          setScanForLifeforms(s => !s)
         }}
       >
         Scan for a new lifeform every 1000ms?
@@ -110,7 +101,7 @@ function Tricorder() {
         Clear found lifeforms
       </button>
       <div>
-        {isScanningForLifeForms ? (
+        {scanForLifeforms ? (
           <span className="font-bold mb-8">SCANNING FOR LIFE FORMS</span>
         ) : (
           "Not scanning for lifeforms"
