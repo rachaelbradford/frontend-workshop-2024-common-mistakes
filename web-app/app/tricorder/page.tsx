@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Counter from "./Counter";
 import { Configure } from "./Configure";
 
-function Tricorder(props: any) {
+function Tricorder() {
   const scanForLifeforms = useState<any>();
 
-  var isScanningForLifeForms = scanForLifeforms[0];
-  var setScanForLifeFormsToTrue = () => scanForLifeforms[1](true);
-  var setScanForLifeFormsToFalse = () => scanForLifeforms[1](false);
+    const isScanningForLifeForms = scanForLifeforms[0];
+    const setScanForLifeFormsToTrue = () => scanForLifeforms[1](true);
+    const setScanForLifeFormsToFalse = () => scanForLifeforms[1](false);
 
-  let [foundLifeforms, setFoundLifeForms] = useState<any>([]);
+    let [foundLifeforms, setFoundLifeForms] = useState<any>([]);
 
   useEffect(() => {
     setInterval(() => {
@@ -26,7 +26,7 @@ function Tricorder(props: any) {
   const [titleSet, setTitleSet] = useState(false);
 
   useEffect(() => {
-    if (titleSet === false) {
+    if (!titleSet) {
       document.title = "Found lifeforms: " + foundLifeforms.length;
     }
   }, [titleSet, foundLifeforms.length]);
