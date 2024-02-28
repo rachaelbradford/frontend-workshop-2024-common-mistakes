@@ -49,7 +49,9 @@ function Tricorder(props: any) {
       <div>
         🙃{" "}
         {Object.keys(config ? config : {})
-          .filter((configItem) => config[configItem] === true)
+          .filter(
+            (configItem) => ((config as any)[configItem as any] as any) === true
+          )
           .map((a) => `${a} on`)
           .join(", ")}
       </div>
