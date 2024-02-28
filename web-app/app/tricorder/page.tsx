@@ -16,15 +16,15 @@ function Tricorder() {
 
   useEffect(() => {
     interval.current = setInterval(() => {
-      setFoundLifeForms([...foundLifeforms, Math.random()]);
-    }, 1000);
+      setFoundLifeForms((f) => [...f, Math.random()]);
+    }, 10);
 
     return () => {
       if (interval.current != null) {
         clearInterval(interval.current);
       }
     };
-  });
+  }, []);
 
   useEffect(() => {
     document.title = "Found lifeforms: " + foundLifeforms.length;
